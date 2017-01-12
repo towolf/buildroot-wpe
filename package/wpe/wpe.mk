@@ -3,8 +3,7 @@
 # WPE
 #
 ################################################################################
-
-WPE_VERSION = 8c8cbf61882b54221d5b7190c3ff28819533b51d
+WPE_VERSION = f070a9e0aa40f9cce9e72d40ed32cabd0acef5b7
 WPE_SITE = $(call github,Metrological,WebKitForWayland,$(WPE_VERSION))
 
 WPE_INSTALL_STAGING = YES
@@ -174,6 +173,10 @@ endif
 ifeq ($(BR2_PACKAGE_WPE_ENABLE_TV_CONTROL), y)
 WPE_FLAGS += -DENABLE_TV_CONTROL=ON
 ifeq ($(BR2_PACKAGE_DVB_APPS),y)
+define WPE_POST_TARGET_INITD
+    $(INSTALL) -D -m 0755 package/wpe/S90Playback $(TARGET_DIR)/etc/init.d
+endef
+WPE_POST_INSTALL_TARGET_HOOKS += WPE_POST_TARGET_INITD
 WPE_FLAGS +=-DUSE_WPE_TVCONTROL_BACKEND_LINUX_DVB=ON
 WPE_DEPENDENCIES += dvb-apps
 endif
