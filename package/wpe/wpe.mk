@@ -248,7 +248,9 @@ endif
 ifeq ($(WPE_BUILD_WEBKIT),y)
 WPE_BUILD_TARGETS += libWPEWebKit.so libWPEWebInspectorResources.so \
 	WPE{Database,Network,Web}Process libWPE.so libWPE-platform.so
-
+ifeq ($(BR2_PACKAGE_WPE_ENABLE_TV_CONTROL), y)
+	WPE_BUILD_TARGETS += libWPE-tvcontrol.so
+endif
 endif
 
 define WPE_BUILD_CMDS
