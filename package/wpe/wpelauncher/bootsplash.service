@@ -1,0 +1,12 @@
+[Unit]
+Description=Boot Splash
+DefaultDependencies=no
+After=sysinit.target local-fs.target
+Before=base.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/omxplayer -b --nodeinterlace --no-osd --no-ghost-box --layer 9999 /root/drop-splash.mp4
+
+[Install]
+WantedBy=base.target

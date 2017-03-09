@@ -1,17 +1,15 @@
-# Please note that this is only a sample, we recommend you to change it to fit
-# your needs.
-# You should override this file using a post-build script.
-# See http://buildroot.org/manual.html#rootfs-custom
-# and http://elinux.org/RPiconfig for a description of config.txt syntax
-
 kernel=zImage
+initramfs rootfs.cpio followkernel
 
-# To use an external initramfs file
-#initramfs rootfs.cpio.gz followkernel
-
-# Disable overscan assuming the display supports displaying the full resolution
-# If the text shown on the screen disappears off the edge, comment this out
+disable_splash=1
 disable_overscan=1
+boot_delay=0
+
+arm_freq=1000
+gpu_freq=500
+sdram_freq=500
+over_voltage=6
+avoid_warnings=1
 
 # How much memory in MB to assign to the GPU on Pi models having
 # 256, 512 or 1024 MB total memory

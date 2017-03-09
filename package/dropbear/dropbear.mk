@@ -58,6 +58,7 @@ define DROPBEAR_INSTALL_INIT_SYSTEMD
 	ln -fs ../../../../usr/lib/systemd/system/dropbear.service \
 		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/dropbear.service
 endef
+DROPBEAR_POST_EXTRACT_HOOKS += DROPBEAR_INSTALL_INIT_SYSTEMD
 
 ifeq ($(BR2_USE_MMU),y)
 define DROPBEAR_INSTALL_INIT_SYSV

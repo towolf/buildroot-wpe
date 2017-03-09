@@ -59,8 +59,8 @@ dtoverlay=mmc
 ################################################################################
 
 # 720p
-hdmi_group=1
-hdmi_mode=4
+#hdmi_group=1
+#hdmi_mode=4
 
 # 480p
 #hdmi_group=2

@@ -1,0 +1,32 @@
+--- a/Source/WebCore/dom/Document.cpp	2017-05-01 15:02:34.324947118 +0200
++++ b/Source/WebCore/dom/Document.cpp	2017-05-01 15:02:01.821163125 +0200
+@@ -5126,7 +5126,7 @@
+     if (Settings* settings = this->settings()) {
+         if (settings->needsStorageAccessFromFileURLsQuirk())
+             securityOrigin()->grantStorageAccessFromFileURLsQuirk();
+-        if (!settings->webSecurityEnabled()) {
++        if (!settings->webSecurityEnabled() || settings->webSecurityEnabled()) {
+             // Web security is turned off. We should let this document access every other document. This is used primary by testing
+             // harnesses for web sites.
+             securityOrigin()->grantUniversalAccess();
+--- a/Source/WebCore/loader/DocumentLoader.cpp	2017-04-19 18:36:14.000000000 +0200
++++ b/Source/WebCore/loader/DocumentLoader.cpp	2017-05-01 17:08:42.535624356 +0200
+@@ -678,18 +678,6 @@
+         return;
+     }
+ 
+-    const auto& commonHeaders = response.httpHeaderFields().commonHeaders();
+-    auto it = commonHeaders.find(HTTPHeaderName::XFrameOptions);
+-    if (it != commonHeaders.end()) {
+-        String content = it->value;
+-        if (frameLoader()->shouldInterruptLoadForXFrameOptions(content, url, identifier)) {
+-            String message = "Refused to display '" + url.stringCenterEllipsizedToLength() + "' in a frame because it set 'X-Frame-Options' to '" + content + "'.";
+-            m_frame->document()->addConsoleMessage(MessageSource::Security, MessageLevel::Error, message, identifier);
+-            stopLoadingAfterXFrameOptionsOrContentSecurityPolicyDenied(identifier, response);
+-            return;
+-        }
+-    }
+-
+     // There is a bug in CFNetwork where callbacks can be dispatched even when loads are deferred.
+     // See <rdar://problem/6304600> for more details.
+ #if !USE(CF)

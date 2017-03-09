@@ -1,0 +1,11 @@
+[Unit]
+Description=WPE launcher
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+EnvironmentFile=-/boot/wpe.txt
+ExecStart=/usr/bin/wpe --loop $URL
+
+[Install]
+WantedBy=multi-user.target
